@@ -12,10 +12,10 @@ export const CreatePostInputType = new GraphQLInputObjectType({
   name: 'CreatePostInput',
   fields: () => ({
     title: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     content: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     authorId: {
       type: new GraphQLNonNull(GraphQLString),
@@ -39,10 +39,10 @@ export const CreateUserInputType = new GraphQLInputObjectType({
   name: 'CreateUserInput',
   fields: () => ({
     name: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     balance: {
-      type: GraphQLFloat,
+      type: new GraphQLNonNull(GraphQLFloat),
     },
   }),
 });
@@ -63,13 +63,13 @@ export const CreateProfileInputType = new GraphQLInputObjectType({
   name: 'CreateProfileInput',
   fields: () => ({
     isMale: {
-      type: GraphQLBoolean,
+      type: new GraphQLNonNull(GraphQLBoolean),
     },
     yearOfBirth: {
-      type: GraphQLInt,
+      type: new GraphQLNonNull(GraphQLInt),
     },
     memberTypeId: {
-      type: MemberTypeIdEnum,
+      type: new GraphQLNonNull(MemberTypeIdEnum),
     },
     userId: {
       type: new GraphQLNonNull(GraphQLString),

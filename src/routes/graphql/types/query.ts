@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PrismaClient } from '@prisma/client';
 import { GraphQLObjectType, GraphQLList, GraphQLNonNull } from 'graphql';
 import { MemberType, MemberTypeIdEnum } from './member-type.js';
@@ -19,7 +18,7 @@ export const queryType = new GraphQLObjectType({
     memberType: {
       type: MemberType,
       args: { id: { type: new GraphQLNonNull(MemberTypeIdEnum) } },
-      resolve: async (_, { id }, context: PrismaClient) => {
+      resolve: async (_, { id }: { id: string }, context: PrismaClient) => {
         return await context.memberType.findUnique({ where: { id } });
       },
     },
@@ -32,7 +31,7 @@ export const queryType = new GraphQLObjectType({
     post: {
       type: PostType,
       args: { id: { type: new GraphQLNonNull(UUIDType) } },
-      resolve: async (_, { id }, context: PrismaClient) =>
+      resolve: async (_, { id }: { id: string }, context: PrismaClient) =>
         await context.post.findUnique({ where: { id } }),
     },
 
@@ -42,9 +41,9 @@ export const queryType = new GraphQLObjectType({
     },
 
     user: {
-      type: UserType,
+      type: UserType as GraphQLObjectType,
       args: { id: { type: new GraphQLNonNull(UUIDType) } },
-      resolve: async (_, { id }, context: PrismaClient) => {
+      resolve: async (_, { id }: { id: string }, context: PrismaClient) => {
         return await context.user.findUnique({ where: { id } });
       },
     },
@@ -57,7 +56,7 @@ export const queryType = new GraphQLObjectType({
     profile: {
       type: ProfileType,
       args: { id: { type: new GraphQLNonNull(UUIDType) } },
-      resolve: async (_, { id }, context: PrismaClient) =>
+      resolve: async (_, { id }: { id: string }, context: PrismaClient) =>
         await context.profile.findUnique({ where: { id } }),
     },
   }),

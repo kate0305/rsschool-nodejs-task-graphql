@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   GraphQLObjectType,
   GraphQLNonNull,
@@ -18,19 +17,19 @@ export const UserType = new GraphQLObjectType({
       type: new GraphQLNonNull(UUIDType),
     },
     name: {
-      type: GraphQLString,
+      type: new GraphQLNonNull(GraphQLString),
     },
     balance: {
-      type: GraphQLFloat,
+      type: new GraphQLNonNull(GraphQLFloat),
     },
     profile: {
       type: ProfileType,
-      resolve: async ({ id }, _, context: PrismaClient) =>
+      resolve: async ({ id }: { id: string }, _, context: PrismaClient) =>
         await context.profile.findUnique({ where: { userId: id } }),
     },
     posts: {
       type: new GraphQLList(PostType),
-      resolve: async ({ id }, _, context: PrismaClient) =>
+      resolve: async ({ id }: { id: string }, _, context: PrismaClient) =>
         await context.post.findMany({ where: { authorId: id } }),
     },
     userSubscribedTo: {
@@ -48,7 +47,7 @@ export const UserType = new GraphQLObjectType({
     },
     subscribedToUser: {
       type: new GraphQLList(UserType),
-      resolve: async ({ id }, _, context: PrismaClient) =>
+      resolve: async ({ id }: { id: string }, _, context: PrismaClient) =>
         await context.user.findMany({
           where: {
             userSubscribedTo: {
@@ -61,4 +60,3 @@ export const UserType = new GraphQLObjectType({
     },
   }),
 });
-//--timeout=0 
